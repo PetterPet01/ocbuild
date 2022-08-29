@@ -68,21 +68,7 @@ pingme() {
 }
 
 buildme() {
-  local cmd_pid
-  local mon_pid
-  local result
-
-  build "$@" &>build.log &
-  cmd_pid=$!
-
-  pingme $! build "$@" &
-  mon_pid=$!
-
-  ## ShellCheck Exception(s)
-  ## https://github.com/koalaman/shellcheck/wiki/SC2069
-  # shellcheck disable=SC2069
-  { wait $cmd_pid 2>/dev/null; result=$?; ps -p$mon_pid 2>&1>/dev/null && kill $mon_pid; } || return 1
-  return $result
+  return 1
 }
 
 symlink() {
